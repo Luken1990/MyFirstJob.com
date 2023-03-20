@@ -1,87 +1,13 @@
 import { FooterNav } from './FooterNav';
 import * as SiIcons from 'react-icons/si';
-import * as FaIcons from 'react-icons/fa';
+import {
+  jobNav,
+  courseNav,
+  moreInfoNav,
+  socials,
+} from './static-components/footerNavMenu';
 
 export const Footer = () => {
-  const jobNav = {
-    heading: 'Jobs',
-    subNav: [
-      {
-        name: 'contact us',
-        link: '#',
-      },
-      {
-        name: 'career Advice',
-        link: '#',
-      },
-      {
-        name: 'work from home',
-        link: '#',
-      },
-      {
-        name: 'average salary checker',
-        link: '#',
-      },
-    ],
-  };
-
-  const courseNav = {
-    heading: 'Course',
-    subNav: [
-      {
-        name: 'help',
-        link: '#',
-      },
-      {
-        name: 'contact us',
-        link: '#',
-      },
-      {
-        name: 'find course',
-        link: '#',
-      },
-      {
-        name: 'free course',
-        link: '#',
-      },
-    ],
-  };
-  const moreInfoNav = {
-    heading: 'More Info',
-    subNav: [
-      {
-        name: 'about us',
-        link: '#',
-      },
-      {
-        name: 'career at MJF',
-        link: '#',
-      },
-      {
-        name: 'press office',
-        link: '#',
-      },
-    ],
-  };
-
-  const socials = [
-    {
-      social: 'facebook',
-      icons: <FaIcons.FaFacebook />,
-      link: '#',
-    },
-    {
-      social: 'instagram',
-      icons: <FaIcons.FaInstagram />,
-      link: '#',
-    },
-    {
-      social: 'twitter',
-      icons: <FaIcons.FaTwitter />,
-      link: '#',
-    },
-  ];
-
   return (
     <footer className=" bg-primary">
       <div className="container mx-auto py-8">
@@ -125,7 +51,7 @@ export const Footer = () => {
                 );
               })}
             </div>
-            <p className="text-xs">COPYRIGHT © myfirstjob.co.uk 2023</p>
+            <p className="text-xs">COPYRIGHT © myfirstjob.com 2023</p>
           </div>
         </div>
       </div>
