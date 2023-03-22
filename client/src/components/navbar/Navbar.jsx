@@ -15,8 +15,8 @@ export const Navbar = () => {
     },
     {
       key: 2,
-      menuItem: 'company reviews',
-      link: 'reviews',
+      menuItem: 'Career Advice',
+      link: 'career',
     },
     {
       key: 3,
