@@ -1,59 +1,41 @@
-import React, { useId, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import * as CiIcons from 'react-icons/ci';
 import { SmJobPost } from './SmJobPost';
 import { FilterForm } from './FilterForm';
+import { fetchData, options } from '../../utilities/fetchData';
 
 export const Main = () => {
   const [location, setLocation] = useState('');
   const [job, setJob] = useState('');
+  const [jobPosting, setJobPosting] = useState([]);
+  const [search, setSearch] = useState('');
 
-  const jobs = [
-    {
-      role: 'Junior Front-End Developer',
-      company: 'devTech',
-      salary: '£25,000',
-      location: 'Remote',
-      type: 'Full-time',
-      description: 'description',
-      postDate: new Date().toLocaleDateString(),
-    },
-    {
-      role: 'Junior Front-End Developer',
-      company: 'devTech',
-      salary: '£25,000',
-      location: 'Remote',
-      type: 'Full-time',
-      description: 'description',
-      postDate: new Date().toLocaleDateString(),
-    },
-    {
-      role: 'Junior Front-End Developer',
-      company: 'devTech',
-      salary: '£25,000',
-      location: 'Remote',
-      type: 'Full-time',
-      description: 'description',
-      postDate: new Date().toLocaleDateString(),
-    },
-    {
-      role: 'Junior Front-End Developer',
-      company: 'devTech',
-      salary: '£25,000',
-      location: 'Remote',
-      type: 'Full-time',
-      description: 'description',
-      postDate: new Date().toLocaleDateString(),
-    },
-    {
-      role: 'Junior Front-End Developer',
-      company: 'devTech',
-      salary: '£25,000',
-      location: 'Remote',
-      type: 'Full-time',
-      description: 'description',
-      postDate: new Date().toLocaleDateString(),
-    },
-  ];
+  // useEffect(() => {
+  //   const getJobPosting = async () => {
+  //     const initialPosting = await fetchData(
+  //       'https://jsearch.p.rapidapi.com/search?query=developer%20in%20london&page=1&num_pages=1&date_posted=today&job_requirements=no_experience',
+  //       options
+  //     );
+  //     setJobPosting(initialPosting);
+  //     console.log(initialPosting)
+  //   };
+  //   getJobPosting();
+  // }, []);
+
+  const handleSearch = () => {
+    setSearch(`query=${job}%20in%20${location}`);
+    setJob('');
+    setLocation('');
+    if (search) {
+      const searchJobs = fetchData(
+        `https://jsearch.p.rapidapi.com/search?${search}`,
+        options
+      );
+      setJobPosting(searchJobs);
+    }
+  };
+
+  const { data } = jobPosting;
 
   return (
     <main className="container mx-auto">
@@ -71,7 +53,7 @@ export const Main = () => {
                 className="w-full border-none text-sm focus:border-secondary"
                 placeholder="Search job title or keyword"
                 value={job}
-                onChange={(e) => setJob(e.target.value)}
+                onChange={(e) => setJob(e.target.value.toLowerCase())}
               />
             </div>
             <div className="flex w-full items-center sm:w-1/2">
@@ -83,15 +65,20 @@ export const Main = () => {
                 className="w-full border-none text-sm focus:border-secondary"
                 placeholder="Country or Postcode"
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                onChange={(e) => setLocation(e.target.value.toLowerCase())}
               />
             </div>
-            <button className="text-sm">Search</button>
+            <button onClick={handleSearch} className="text-sm">
+              Search
+            </button>
           </div>
-
-          {jobs.map((job, index) => {
-            return <SmJobPost key={index} job={job} />;
-          })}
+          {jobPosting.data ? (
+            <>
+              {data.map((post, index) => {
+                return <SmJobPost key={index} post={post} />;
+              })}{' '}
+            </>
+          ) : null}
         </div>
       </div>
     </main>

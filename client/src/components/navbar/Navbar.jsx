@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import * as AiIcons from 'react-icons/ai';
 import * as FaIcons from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
   const [show, setShow] = useState(false);
@@ -10,17 +11,17 @@ export const Navbar = () => {
     {
       key: 1,
       menuItem: 'find jobs',
-      link: '#',
+      link: '/',
     },
     {
       key: 2,
       menuItem: 'company reviews',
-      link: '#',
+      link: 'reviews',
     },
     {
       key: 3,
       menuItem: 'about us',
-      link: '#',
+      link: '/about',
     },
   ];
 
@@ -36,12 +37,12 @@ export const Navbar = () => {
             {navList.map(({ key, menuItem, link }) => {
               return (
                 <li key={key} className="px-4 py-4">
-                  <a
+                  <Link
+                    to={link}
                     className="box-border py-4 text-sm hover:border-b-2 hover:border-secondary hover:text-secondary"
-                    href={link}
                   >
                     {menuItem}
-                  </a>
+                  </Link>
                 </li>
               );
             })}

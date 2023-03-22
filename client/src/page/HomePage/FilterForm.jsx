@@ -13,7 +13,7 @@ export const FilterForm = () => {
       <div className="rounded-md border border-slate-200">
         <div className=" flex justify-between border-b-[1px] p-4">
           <h3>Filter</h3>
-          <p className="text-secondary cursor-pointer">Clear All</p>
+          <p className="cursor-pointer text-secondary">Clear All</p>
         </div>
 
         <form action="" className="p-4">
