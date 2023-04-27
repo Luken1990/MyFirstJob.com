@@ -3,44 +3,48 @@ import * as CiIcons from 'react-icons/ci';
 import { SmJobPost } from './SmJobPost';
 import { FilterForm } from './FilterForm';
 import { fetchData, options } from '../../utilities/fetchData';
+import { tempData } from '../../utilities/tempData';
+import { JobContext } from '../../App';
 
 export const Main = () => {
+  const [jobPosting, setJobPosting] = useContext(JobContext);
   const [location, setLocation] = useState('');
   const [job, setJob] = useState('');
-  const [jobPosting, setJobPosting] = useState([]);
-  const [search, setSearch] = useState('');
+  const [url, setUrl] = useState(
+    'https://jsearch.p.rapidapi.com/search?query=developer%20in%20london&page=1&num_pages=1&date_posted=today&job_requirements=no_experience'
+  );
 
-  // useEffect(() => {
+  //useEffect(() => {
   //   const getJobPosting = async () => {
   //     const initialPosting = await fetchData(
-  //       'https://jsearch.p.rapidapi.com/search?query=developer%20in%20london&page=1&num_pages=1&date_posted=today&job_requirements=no_experience',
+  //       url,
   //       options
   //     );
-  //     setJobPosting(initialPosting);
-  //     console.log(initialPosting)
+  //     setJobPosting(initialPosting.data);
+  //     console.log(initialPosting);
   //   };
   //   getJobPosting();
   // }, []);
 
-  const handleSearch = () => {
-    setSearch(`query=${job}%20in%20${location}`);
+  useEffect(() => {
+    setJobPosting(tempData);
+  }, []);
+
+  const handleSearch = async () => {
+    if (job && location) {
+      const searchUrl = `https://jsearch.p.rapidapi.com/search?query=${job}%20in%20${location}`;
+      const searchJobs = await fetchData(searchUrl, options);
+      setUrl(searchUrl);
+      setJobPosting(searchJobs.data);
+    }
     setJob('');
     setLocation('');
-    if (search) {
-      const searchJobs = fetchData(
-        `https://jsearch.p.rapidapi.com/search?${search}`,
-        options
-      );
-      setJobPosting(searchJobs);
-    }
   };
-
-  const { data } = jobPosting;
 
   return (
     <main className="container mx-auto">
       <div className="grid grid-cols-12 gap-3 px-4 py-8">
-        <FilterForm />
+        <FilterForm url={url} setUrl={setUrl}/>
 
         <div className="col-span-12 flex flex-col gap-y-3 sm:col-span-8">
           <div className="flex flex-col gap-y-2 rounded-md border border-slate-200 p-4 sm:flex-row sm:p-2">
@@ -72,9 +76,9 @@ export const Main = () => {
               Search
             </button>
           </div>
-          {jobPosting.data ? (
+          {jobPosting ? (
             <>
-              {data.map((post, index) => {
+              {jobPosting.map((post, index) => {
                 return <SmJobPost key={index} post={post} />;
               })}{' '}
             </>

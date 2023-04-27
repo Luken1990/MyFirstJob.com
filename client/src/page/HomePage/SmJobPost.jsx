@@ -1,3 +1,5 @@
+import { useNavigate, Link } from 'react-router-dom';
+
 export const SmJobPost = ({ post }) => {
   const {
     employer_name,
@@ -12,6 +14,7 @@ export const SmJobPost = ({ post }) => {
     job_max_salary,
     job_posted_at_datetime_utc,
     job_description,
+    job_id,
   } = post;
 
   return (
@@ -21,8 +24,9 @@ export const SmJobPost = ({ post }) => {
           {employer_logo ? (
             <img className="h-8" src={employer_logo} alt="" />
           ) : null}
-
-          <h3>{job_title}</h3>
+          <Link to={`/job/${job_id}`}>
+            <h3>{job_title}</h3>
+          </Link>
         </div>
         <p className="text-sm">{`${job_city}, ${job_country}`}</p>
       </div>
@@ -41,7 +45,10 @@ export const SmJobPost = ({ post }) => {
       <div className="mt-6">
         <p className="text-xs">
           {job_description.length > 400
-            ? `${job_description.split(' ').slice(0,50).join(' ')} . . . continue reading `
+            ? `${job_description
+                .split(' ')
+                .slice(0, 50)
+                .join(' ')} . . . continue reading `
             : job_description}
         </p>
         {/* <ul className="list-inside list-disc text-sm">

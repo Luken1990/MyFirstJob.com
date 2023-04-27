@@ -1,12 +1,34 @@
-import { useId } from 'react';
+import { useId, useState, useContext } from 'react';
 import {
   jobType,
   salaryRange,
   workLocation,
 } from './static-components/formData';
+import { JobContext } from '../../App';
+import { nanoid } from 'nanoid';
 
-export const FilterForm = () => {
+export const FilterForm = ({ url, setUrl }) => {
+  const [jobPosting, setJobPosting] = useContext(JobContext);
+  const [date, setDate] = useState([]);
+  const [type, setType] = useState([]);
+  const [base, setBase] = useState([]);
   const id = useId();
+
+  const handleDate = (e) => {
+    const date = e.target.value
+    console.log(url)
+  }
+
+  const handleType = (e) => {
+    // console.log(e.target.value);
+
+    // if (!types.includes(type)) {
+    //   setTypes([...types, type]);
+    // } else {
+    //   const filteredTypes = types.filter((item) => item !== type);
+    //   setTypes(filteredTypes);
+    // }
+  };
 
   return (
     <div className="col-span-12  sm:col-span-4">
@@ -20,14 +42,16 @@ export const FilterForm = () => {
           <div className="border-b-[1px] py-6">
             <label htmlFor="date">Date Post</label>
             <select
+              onChange={(e) => handleDate(e)}
               name="date"
               id="date"
               className="mt-2 block w-full rounded-md border bg-white p-2 text-sm "
             >
-              <option value="anytime">Anytime</option>
+              <option value="all">Anytime</option>
               <option value="today">Today</option>
-              <option value="threeDays">Last 3 days</option>
-              <option value="lastWeek">Last week</option>
+              <option value="3days">Last 3 days</option>
+              <option value="week">Week</option>
+              <option value="month">Month</option>
             </select>
           </div>
 
@@ -38,14 +62,16 @@ export const FilterForm = () => {
               {jobType.map(({ type }, index) => {
                 return (
                   <div
-                    key={index}
+                    key={nanoid()}
                     className="flex basis-1/2 items-center gap-2"
                   >
                     <input
+                      onClick={handleType}
                       id={`${id}-${type}`}
                       name={type}
                       type="checkbox"
                       className="border-1 rounded-sm border-slate-400 text-secondary focus:ring-0 focus:ring-offset-0"
+                      value={type}
                     />
                     <label
                       htmlFor="<1k"
@@ -66,7 +92,7 @@ export const FilterForm = () => {
               {workLocation.map(({ location }, index) => {
                 return (
                   <div
-                    key={index}
+                    key={nanoid()}
                     className="flex basis-1/2 items-center gap-2"
                   >
                     <input

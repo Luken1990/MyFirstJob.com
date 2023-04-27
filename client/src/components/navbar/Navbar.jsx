@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import * as AiIcons from 'react-icons/ai';
 import * as FaIcons from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const Navbar = () => {
   const [show, setShow] = useState(false);
@@ -37,12 +37,16 @@ export const Navbar = () => {
             {navList.map(({ key, menuItem, link }) => {
               return (
                 <li key={key} className="px-4 py-4">
-                  <Link
+                  <NavLink
                     to={link}
-                    className="box-border py-4 text-sm hover:border-b-2 hover:border-secondary hover:text-secondary"
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'box-border border-b-2 border-secondary py-4 text-sm text-secondary '
+                        : 'box-border py-4 text-sm hover:border-b-2 hover:border-secondary hover:text-secondary'
+                    }
                   >
                     {menuItem}
-                  </Link>
+                  </NavLink>
                 </li>
               );
             })}

@@ -1,12 +1,12 @@
 export const jobType = [
   {
-    type: 'full-time',
+    type: 'fulltime',
   },
   {
-    type: 'part-time',
+    type: 'parttime',
   },
   {
-    type: 'contract',
+    type: 'contractor',
   },
   {
     type: 'internship',
