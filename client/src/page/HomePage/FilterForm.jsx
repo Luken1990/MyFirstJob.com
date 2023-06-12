@@ -6,28 +6,20 @@ import {
 } from './static-components/formData';
 import { JobContext } from '../../App';
 import { nanoid } from 'nanoid';
+import { fetchData } from '../../utilities/fetchData';
 
 export const FilterForm = ({ url, setUrl }) => {
   const [jobPosting, setJobPosting] = useContext(JobContext);
-  const [date, setDate] = useState([]);
-  const [type, setType] = useState([]);
+  const [types, setTypes] = useState([]);
   const [base, setBase] = useState([]);
   const id = useId();
 
-  const handleDate = (e) => {
-    const date = e.target.value
-    console.log(url)
-  }
+  const handleDate = async (e) => {
+   
+  };
 
-  const handleType = (e) => {
-    // console.log(e.target.value);
-
-    // if (!types.includes(type)) {
-    //   setTypes([...types, type]);
-    // } else {
-    //   const filteredTypes = types.filter((item) => item !== type);
-    //   setTypes(filteredTypes);
-    // }
+  const handleType = async (e) => {
+  
   };
 
   return (
@@ -66,12 +58,13 @@ export const FilterForm = ({ url, setUrl }) => {
                     className="flex basis-1/2 items-center gap-2"
                   >
                     <input
-                      onClick={handleType}
+                      className="border-1 rounded-sm border-slate-400 text-secondary focus:ring-0 focus:ring-offset-0"
                       id={`${id}-${type}`}
                       name={type}
                       type="checkbox"
-                      className="border-1 rounded-sm border-slate-400 text-secondary focus:ring-0 focus:ring-offset-0"
                       value={type}
+                      onChange={handleType}
+                      checked={types.includes(type) ? true : false}
                     />
                     <label
                       htmlFor="<1k"
@@ -117,3 +110,42 @@ export const FilterForm = ({ url, setUrl }) => {
     </div>
   );
 };
+
+
+// const handleDate = async (e) => {
+//   const date = e.target.value;
+//   setOptions({
+//     ...options,
+//     params: {
+//       ...options.params,
+//       date_posted: date,
+//     },
+//   });
+//   const filterDate = await fetchData(options);
+//   setJobPosting(filterDate.results);
+// };
+
+// const handleType = async (e) => {
+//   const type = e.target.value;
+
+//   if (!types.includes(type)) {
+//     setTypes([...types, type]);
+//   } else {
+//     const filteredTypes = types.filter((item) => item !== type);
+//     setTypes(filteredTypes);
+//   }
+
+//   const typeStr = types.join(',').toUpperCase();
+//   console.log(typeStr);
+
+//   setOptions({
+//     ...options,
+//     params: {
+//       ...options.params,
+//       employment_types: typeStr,
+//     },
+//   });
+//   console.log(options);
+//   const filterRequirements = await fetchData(options);
+//   setJobPosting(filterRequirements.data);
+// };

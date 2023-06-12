@@ -15,31 +15,26 @@ const Job = () => {
     <div className="container mx-auto">
       {job.map(
         ({
-          job_title,
-          job_posted_at_datetime_utc,
-          job_min_salary,
-          job_max_salary,
-          job_apply_link,
-          job_is_remote,
-          job_salary_period,
-          job_employment_type,
-          job_city,
-          job_country,
-          employer_name,
-          job_description,
-          job_highlights,
+          title,
+          created,
+          salary_max,
+          salary_min,
+          location,
+          contract_time,
+          company,
+          description,
         }) => {
           return (
             <div className="py-20  px-4" key={nanoid()}>
               <div className="mb-8 flex flex-col items-center gap-y-4 bg-slate-100 p-4">
-                <h2 className="text-2xl">{job_title}</h2>
-                <small>{job_posted_at_datetime_utc}</small>
+                <h2 className="text-2xl">{title}</h2>
+                <small>{created}</small>
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:gap-8">
                   <div className="flex items-center gap-3">
                     <GrIcons.GrLocation />
-                    {job_city && job_country ? (
-                      <p className="text-sm">{`${job_city}, ${job_country}`}</p>
+                    {location.area[3] && location.area[0] ? (
+                      <p className="text-sm">{`${location.area[3]}, ${location.area[0]}`}</p>
                     ) : null}
                   </div>
 
@@ -55,7 +50,7 @@ const Job = () => {
                   {job_max_salary && job_max_salary ? (
                     <div className="flex items-center gap-3">
                       <GrIcons.GrMoney />
-                      <p className="text-sm">{`£${job_min_salary} - £${job_max_salary} ${
+                      <p className="text-sm">{`£${salary_min} - £${salary_max} ${
                         job_salary_period === 'HOUR'
                           ? 'an hour'
                           : job_salary_period === 'YEAR'
@@ -67,7 +62,7 @@ const Job = () => {
 
                   <div className="flex items-center gap-3">
                     <AiIcons.AiOutlineClockCircle />
-                    {job_employment_type === 'FULLTIME' ? (
+                    {contract_time === 'FULLTIME' ? (
                       <p className="text-sm">full-time</p>
                     ) : (
                       <p className="text-sm">part-time</p>
@@ -85,9 +80,9 @@ const Job = () => {
               <div className="mb-16">
                 <h3 className="mb-8 text-xl font-bold">{employer_name}</h3>
 
-                {job_description ? (
+                {description ? (
                   <>
-                    {job_description.split('\n\n').map((item) => {
+                    {description.split('\n\n').map((item) => {
                       return (
                         <p key={nanoid()} className="mb-4 text-sm">
                           {item.split('\n').map((item) => item)}

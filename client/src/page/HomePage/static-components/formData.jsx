@@ -9,7 +9,7 @@ export const jobType = [
     type: 'contractor',
   },
   {
-    type: 'internship',
+    type: 'intern',
   },
 ];
 
